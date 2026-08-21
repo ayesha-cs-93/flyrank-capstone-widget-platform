@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Acme Co — Customer Website (test page, different origin)</title>
+  <style>
+    body { font-family: system-ui, sans-serif; max-width: 640px; margin: 60px auto; padding: 0 20px; }
+    h1 { color: #333; }
+    .note { background: #fffbe6; border: 1px solid #f0e0a0; padding: 10px 14px; border-radius: 6px; font-size: 14px; }
+    form { border: 1px solid #ddd; padding: 20px; border-radius: 8px; margin-top: 24px; }
+    input, textarea { display: block; width: 100%; margin: 8px 0; padding: 8px; box-sizing: border-box; }
+    button { padding: 8px 16px; }
+  </style>
+</head>
+<body>
+  <h1>Acme Co — Homepage</h1>
+  <p>This is a plain HTML page representing a customer's website. It is served from a
+     <strong>different origin</strong> than the widget API (a different local port), which is
+     exactly what proves cross-origin embedding actually works — not just "runs on the same server."</p>
+
+  <div class="note">
+    Update the <code>id=</code> query param below with a real widget id
+    (create one via <code>POST /api/widgets</code> first), and update the
+    <code>src</code> origin/port if your API isn't on <code>localhost:8000</code>.
+  </div>
+
+  <h2>Our newsletter</h2>
+
+  <!-- This one line is the entire integration -->
+  <script src="http://localhost:8000/widget.js?id=26277e41-fbb2-487b-9718-17a22febedaa"></script>
+
+</body>
+</html>
