@@ -1,0 +1,39 @@
+name: Embeddable Widget & Lead-Capture Platform
+track: Backend AI Engineering
+stack: python-fastapi
+
+run: docker compose up -d && uvicorn app.main:app --host 0.0.0.0 --port 8000
+seed: python3 -c "from app.database import SessionLocal; from app.models import Tenant; from app.auth import hash_key; db = SessionLocal(); db.add(Tenant(email='demo@example.com', api_key_hash=hash_key('demo-key'))); db.commit()"
+test: python3 -m pytest tests/ -v
+
+base_url: http://localhost:8000
+
+endpoints:
+  - method: POST
+    path: /api/widgets
+    auth: X-API-Key header
+    description: create a widget, returns embed snippet
+  - method: GET
+    path: /api/widgets/{widget_id}/config
+    auth: none
+    description: public widget config, cached 60s
+  - method: GET
+    path: /widget.js
+    auth: none
+    description: versioned widget bundle, cached 1 year
+  - method: POST
+    path: /api/submissions
+    auth: none
+    description: public, CORS-enabled, rate-limited, spam-filtered, geo-enriched submission endpoint
+  - method: GET
+    path: /api/dashboard/submissions
+    auth: X-API-Key header
+    description: tenant-scoped submission list
+  - method: GET
+    path: /api/dashboard/stats
+    auth: X-API-Key header
+    description: tenant-scoped counts + geo breakdown
+  - method: GET
+    path: /health
+    auth: none
+    description: liveness check
